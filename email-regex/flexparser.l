@@ -2,23 +2,42 @@
 #include <stdio.h>
 #include <string.h>
 %}
+
+
+IDENTIFIER [a-zA-Z][a-zA-Z0-9]*
+NUMBER {DIGIT}+
+DIGIT [0-9]
+
+
 %%
 
-\+90[0-9]{10} {
-    printf("Rule 1: Phone number without spaces: %s\n", yytext);
-    }
+abc { printf("abc found: %s",yytext); }
+abc* { printf("abc* found: %s",yytext); }
+ab*c { printf("abc found: %s",yytext); }
 
-\+90\s[0-9]{3}\s[0-9]{3}\s[0-9]{2}\s[0-9]{2} {
-    printf("RULE 2: Phone number with spaces: %s\n", yytext);
-    }
-
-[a-zA-Z\.\-\_0-9]+\@[a-z]+\.[a-z]{2,}(\.[a-z]{2,})? {
-    printf("RULE 4: Email: %s\n", yytext);
-    }
-
-. {
-    
+{IDENTIFIER}\@[a-z]+\.[a-z]{2,}(\.[a-z]{2,})? {
+    printf("email: %s\n", yytext);
 }
+
+asd123 {
+    printf("asd123 found: %s\n", yytext);
+}
+
+\"asd123\" {
+    printf("\"asd123\" found: %s\n", yytext);
+}
+
+x {
+    printf("I found unbound x: %s\n", yytext);
+}
+
+[xy] {
+    printf("I found x or y: %s\n", yytext);
+}
+
+. {}
+\n {}
+
 %%
 
 int main(int argc, char **argv) {
